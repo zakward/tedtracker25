@@ -84,6 +84,7 @@ export const categories = {
 
 /**
  * Generate 3 random purchases per item, each with a review
+ * Changed "author" key to "user"
  */
 export const purchases = [];
 let purchaseId = 1;
@@ -96,7 +97,7 @@ Object.values(categories).flat().forEach((item) => {
 
     purchases.push({
       id: purchaseId++,
-      author: authors[Math.floor(Math.random() * authors.length)],
+      user: authors[Math.floor(Math.random() * authors.length)],
       itemId: item.id,
       datePurchased: purchase.toISOString().split('T')[0],
       harvestDate: harvest.toISOString().split('T')[0],

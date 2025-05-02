@@ -59,7 +59,7 @@ const ItemPage = () => {
         ) : (
           <>
             <h2
-              className="text-3xl  mb-2"
+              className="text-3xl mb-2"
               style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
             >
               {product.name}
@@ -85,9 +85,7 @@ const ItemPage = () => {
             </h3>
 
             {records.length === 0 ? (
-              <p
-                style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
-              >
+              <p style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}>
                 No purchases recorded for this item.
               </p>
             ) : (
@@ -99,7 +97,7 @@ const ItemPage = () => {
                       <table className="min-w-max w-full table-auto border-collapse">
                         <thead>
                           <tr>
-                            {['Author','Date Purchased','Harvest Date','THC (%)','CBD (%)'].map(header => (
+                            {['User', 'Date Purchased', 'Harvest Date', 'THC (%)', 'CBD (%)'].map(header => (
                               <th
                                 key={header}
                                 className="border px-3 py-2 font-normal bg-[#264653] text-white"
@@ -112,19 +110,34 @@ const ItemPage = () => {
                         </thead>
                         <tbody>
                           <tr className="odd:bg-white even:bg-[#eef7f2]">
-                            <td className="border px-3 py-2" style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}>
-                              {rec.author}
+                            <td
+                              className="border px-3 py-2"
+                              style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
+                            >
+                              {rec.user}
                             </td>
-                            <td className="border px-3 py-2" style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}>
+                            <td
+                              className="border px-3 py-2"
+                              style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
+                            >
                               {formatDate(rec.datePurchased)}
                             </td>
-                            <td className="border px-3 py-2" style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}>
+                            <td
+                              className="border px-3 py-2"
+                              style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
+                            >
                               {formatDate(rec.harvestDate)}
                             </td>
-                            <td className="border px-3 py-2" style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}>
+                            <td
+                              className="border px-3 py-2"
+                              style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
+                            >
                               {rec.thc}
                             </td>
-                            <td className="border px-3 py-2" style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}>
+                            <td
+                              className="border px-3 py-2"
+                              style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
+                            >
                               {rec.cbd}
                             </td>
                           </tr>
