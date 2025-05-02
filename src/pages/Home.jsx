@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { categories as categoryData } from '../fakedata';
-import bgimage from "../assets/images/home-bg.png";
+import bgimage from "../assets/images/modal-bg.png";
 
 const categoryNames = Object.keys(categoryData);
 
@@ -15,7 +15,7 @@ const Home = () => (
     <div className="absolute inset-0 bg-opacity-30"></div>
 
     {/* Content card */}
-    <div className="relative flex flex-col items-center  z-10 bg-[#F5E1B9] border-4 border-[#0e284b] h-[50vh] shadow-2xl p-6 w-12/12 max-w-md text-center">
+    <div className="relative bottom-20 flex flex-col items-center  z-10 bg-[#F5E1B9] border-4 border-[#0e284b] h-[50vh] shadow-2xl p-6 w-12/12 max-w-md text-center">
       {/* Retro heading */}
       <h1
         className="text-5xl sm:text-4xl font-bold mb-4"

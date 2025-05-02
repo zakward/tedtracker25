@@ -2,7 +2,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { categories } from '../fakedata';
-import bgimage from '../assets/images/modal-bg.png'; // ← your new background here
+import bgimage from '../assets/images/modal-bg.png';
 
 const CategoryPage = () => {
   const { category } = useParams();
@@ -10,56 +10,45 @@ const CategoryPage = () => {
 
   return (
     <div
-      className="relative flex flex-col items-center justify-start h-screen bg-cover bg-center overflow-auto"
+      className="relative flex flex-col pt-[50px] items-center h-screen bg-cover bg-center"
       style={{ backgroundImage: `url(${bgimage})` }}
     >
-      {/* Semi-transparent overlay */}
+      {/* Overlay */}
       <div className="absolute inset-0 bg-opacity-30"></div>
 
-      {/* Content card */}
-      <div className="relative z-10 mt-12 bg-[#F5E1B9] border-4 border-[#264653] rounded-2xl shadow-2xl p-6 w-11/12 max-w-lg text-center">
-        <Link
-          to="/"
-          className="block text-lg font-medium mb-4"
-          style={{
-            color: '#264653',
-            fontFamily: "'Fredoka One', sans-serif",
-          }}
-        >
-          &larr; Back to Home
-        </Link>
+      {/* Floating back button */}
+      <Link
+        to="/"
+        className="relative z-10 mb-4  p-2 rounded border-4 border-[#264653] font-normal bg-[#264653] text-white"
+        style={{  fontFamily: "'Fredoka One', sans-serif" }}
+      >
+        &larr; Back to Home
+      </Link>
 
+      {/* Card */}
+      <div className="relative z-10 bg-[#F5E1B9] border-4 border-[#264653] rounded-2xl shadow-2xl w-11/12 max-w-lg h-[65vh] p-6 overflow-y-auto overflow-x-hidden">
         <h2
-          className="text-3xl font-bold mb-4"
-          style={{
-            color: '#264653',
-            fontFamily: "'Fredoka One', sans-serif",
-          }}
+          className="text-3xl font-bold mb-4 text-center"
+          style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
         >
           {category}
         </h2>
 
         {items.length === 0 ? (
           <p
-            className="text-lg"
-            style={{
-              color: '#264653',
-              fontFamily: "'Fredoka One', sans-serif",
-            }}
+            className="text-lg text-center"
+            style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
           >
             No products found in this category.
           </p>
         ) : (
-          <ul className="list-disc list-inside space-y-2">
-            {items.map((item) => (
-              <li key={item.id}>
+          <ul className="list-disc list-inside space-y-2 prose lg:prose-xl">
+            {items.map(item => (
+              <li key={item.id} className="pl-2">
                 <Link
                   to={`/item/${item.id}`}
                   className="text-xl font-medium"
-                  style={{
-                    color: '#2A9D8F',
-                    fontFamily: "'Fredoka One', sans-serif",
-                  }}
+                  style={{ color: '#2A9D8F', fontFamily: "'Fredoka One', sans-serif" }}
                 >
                   {item.name}
                 </Link>

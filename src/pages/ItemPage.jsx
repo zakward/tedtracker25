@@ -2,14 +2,23 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { categories, purchases } from '../fakedata';
+import bgimage from '../assets/images/modal-bg.png';
+
+const formatDate = dateStr => {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
 
 const ItemPage = () => {
   const { itemId } = useParams();
   const id = parseInt(itemId, 10);
-
-  // Find the item definition
   let product = null;
   let productCategory = '';
+
   for (const [cat, items] of Object.entries(categories)) {
     const found = items.find(i => i.id === id);
     if (found) {
@@ -19,56 +28,123 @@ const ItemPage = () => {
     }
   }
 
-  // Filter purchases for this item
   const records = purchases.filter(p => p.itemId === id);
 
-  if (!product) {
-    return (
-      <div className="min-h-screen p-8">
-        <Link to="/" className="text-blue-500 hover:underline mb-4 inline-block">
-          &larr; Back to Home
-        </Link>
-        <p className="text-red-500">Product not found.</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen p-8">
-      <Link to={`/category/${encodeURIComponent(productCategory)}`} className="text-blue-500 hover:underline mb-4 inline-block">
-        &larr; Back to {productCategory}
-      </Link>
-      <h2 className="text-2xl font-bold mb-4">{product.name}</h2>
-      <p className="mb-2"><strong>Grower:</strong> {product.grower}</p>
-      <p className="mb-6"><strong>Type:</strong> {product.strainType}</p>
+    <div
+      className="relative flex flex-col pt-[50px] items-center h-screen bg-cover bg-center"
+      style={{ backgroundImage: `url(${bgimage})` }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-opacity-30"></div>
 
-      <h3 className="text-xl font-semibold mb-3">Purchase Records</h3>
-      {records.length === 0 ? (
-        <p>No purchases recorded for this item.</p>
-      ) : (
-        <table className="min-w-full table-auto border-collapse">
-          <thead>
-            <tr>
-              <th className="border px-4 py-2">Author</th>
-              <th className="border px-4 py-2">Date Purchased</th>
-              <th className="border px-4 py-2">Harvest Date</th>
-              <th className="border px-4 py-2">THC (%)</th>
-              <th className="border px-4 py-2">CBD (%)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {records.map(rec => (
-              <tr key={rec.id}>
-                <td className="border px-4 py-2">{rec.author}</td>
-                <td className="border px-4 py-2">{rec.datePurchased}</td>
-                <td className="border px-4 py-2">{rec.harvestDate}</td>
-                <td className="border px-4 py-2">{rec.thc}</td>
-                <td className="border px-4 py-2">{rec.cbd}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      {/* Floating back button */}
+      <Link
+        to={product ? `/category/${encodeURIComponent(productCategory)}` : '/'}
+        className="relative z-10 mb-4 p-2 rounded border-4 border-[#264653] font-normal bg-[#264653] text-white"
+        style={{ fontFamily: "'Fredoka One', sans-serif" }}
+      >
+        &larr; Back to {product ? productCategory : 'Home'}
+      </Link>
+
+      {/* Card */}
+      <div className="relative z-10 bg-[#F5E1B9] border-4 border-[#264653] rounded-2xl shadow-2xl w-11/12 max-w-lg h-[65vh] p-6 overflow-y-auto text-left">
+        {!product ? (
+          <p
+            className="text-center text-red-500"
+            style={{ fontFamily: "'Fredoka One', sans-serif" }}
+          >
+            Product not found.
+          </p>
+        ) : (
+          <>
+            <h2
+              className="text-3xl  mb-2"
+              style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
+            >
+              {product.name}
+            </h2>
+            <p
+              className="mb-1"
+              style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
+            >
+              <strong>Grower:</strong> {product.grower}
+            </p>
+            <p
+              className="mb-4"
+              style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
+            >
+              <strong>Type:</strong> {product.strainType}
+            </p>
+
+            <h3
+              className="text-2xl mb-3"
+              style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
+            >
+              Purchase Records
+            </h3>
+
+            {records.length === 0 ? (
+              <p
+                style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}
+              >
+                No purchases recorded for this item.
+              </p>
+            ) : (
+              <div className="space-y-6">
+                {records.map(rec => (
+                  <div key={rec.id} className="space-y-2">
+                    {/* Table wrapper with white background for contrast */}
+                    <div className="overflow-x-auto mb-2 rounded-lg bg-white bg-opacity-90">
+                      <table className="min-w-max w-full table-auto border-collapse">
+                        <thead>
+                          <tr>
+                            {['Author','Date Purchased','Harvest Date','THC (%)','CBD (%)'].map(header => (
+                              <th
+                                key={header}
+                                className="border px-3 py-2 font-normal bg-[#264653] text-white"
+                                style={{ fontFamily: "'Fredoka One', sans-serif" }}
+                              >
+                                {header}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="odd:bg-white even:bg-[#eef7f2]">
+                            <td className="border px-3 py-2" style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}>
+                              {rec.author}
+                            </td>
+                            <td className="border px-3 py-2" style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}>
+                              {formatDate(rec.datePurchased)}
+                            </td>
+                            <td className="border px-3 py-2" style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}>
+                              {formatDate(rec.harvestDate)}
+                            </td>
+                            <td className="border px-3 py-2" style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}>
+                              {rec.thc}
+                            </td>
+                            <td className="border px-3 py-2" style={{ color: '#264653', fontFamily: "'Fredoka One', sans-serif" }}>
+                              {rec.cbd}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    {/* Review */}
+                    <div
+                      className="italic px-3 py-2 bg-[#E0F4EF] rounded text-[#264653]"
+                      style={{ fontFamily: "'Fredoka One', sans-serif" }}
+                    >
+                      “{rec.review}”
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };
