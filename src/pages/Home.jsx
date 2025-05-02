@@ -39,7 +39,7 @@ const Home = () => (
         <Link
           to="/education"
           className="text-3xl font-medium"
-          style={{ color: "#2A9D8F" }}
+          style={ {color: "#264653"}}
         >
           Education
         </Link>
